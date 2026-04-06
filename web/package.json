@@ -1,0 +1,35 @@
+{
+  "name": "copilotz-starter-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "link:libs": "npm link @copilotz/chat-ui @copilotz/chat-adapter",
+    "unlink:libs": "npm unlink @copilotz/chat-ui @copilotz/chat-adapter && npm install"
+  },
+  "dependencies": {
+    "@copilotz/chat-adapter": "^0.3.0",
+    "@copilotz/chat-ui": "^0.3.0",
+    "@radix-ui/react-scroll-area": "^1.2.10",
+    "@radix-ui/react-separator": "^1.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.540.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "tailwind-merge": "^3.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.12",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "tailwindcss": "^4.1.12",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}
