@@ -11,8 +11,8 @@
     "unlink:libs": "npm unlink @copilotz/chat-ui @copilotz/chat-adapter && npm install"
   },
   "dependencies": {
-    "@copilotz/chat-adapter": "^0.3.0",
-    "@copilotz/chat-ui": "^0.3.0",
+    "@copilotz/chat-adapter": "^0.3.3",
+    "@copilotz/chat-ui": "^0.3.3",
     "@radix-ui/react-scroll-area": "^1.2.10",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",

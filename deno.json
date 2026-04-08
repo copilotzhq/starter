@@ -20,8 +20,9 @@
     "build:web": "cd web && npm run build"
   },
   "imports": {
-    "copilotz": "jsr:@copilotz/copilotz@0.25.3",
-    "copilotz/server": "jsr:@copilotz/copilotz@0.25.3/server",
+    "copilotz": "jsr:@copilotz/copilotz@0.26.3",
+    "copilotz/server": "jsr:@copilotz/copilotz@0.26.3/server",
+    "copilotz/server/channels/web": "jsr:@copilotz/copilotz@0.26.3/server/channels/web",
     "oxian-js": "jsr:@oxian/oxian-js@^0.12.24",
     "@/": "./"
   }
