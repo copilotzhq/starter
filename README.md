@@ -31,16 +31,17 @@ Open [http://localhost:5173](http://localhost:5173) to see the app.
 │   ├── dependencies.ts     # Copilotz bootstrap & configuration
 │   ├── runAgent.ts         # CLI agent runner
 │   └── v1/
-│       ├── agents/         # Agent management
-│       ├── assets/         # File/asset handling
-│       ├── channels/       # Channel integrations (web, WhatsApp, etc.)
-│       ├── collections/    # Data collections
-│       ├── graph/          # Knowledge graph queries
-│       ├── participants/   # User/participant profiles
-│       ├── providers/      # LLM provider endpoints
-│       └── threads/        # Conversation threads & messages
+│       ├── [...path].ts/   # Request Handler
 ├── resources/              # Agent resource schemas
-│   └── schemas/
+│   ├── agents/             # Agents resources definitions
+│   ├── apis/               # API resource definitions
+│   ├── collections/        # Collections resource definitions
+│   ├── features/           # Features resource definitions
+│   ├── llms/               # LLMs resource definitions
+│   ├── processors/         # Processors resource definitions
+│   ├── storage/            # Storage resource definitions
+│   └── tools/              # Tools resource definitions
+
 ├── web/                    # React/Vite frontend
 │   ├── components/         # UI components (ChatClient, LoginPage, etc.)
 │   ├── services/           # API service layer
@@ -69,7 +70,7 @@ Key variables:
 |----------|-------------|
 | `DATABASE_URL` | Database connection string (SQLite file, PostgreSQL, or `:memory:`) |
 | `LLM_PROVIDER` | LLM provider name (`openai`, `gemini`, `anthropic`, etc.) |
-| `LLM_MODEL` | Model name (e.g., `gpt-4o`, `gemini-2.5-flash`) |
+| `LLM_MODEL` | Model name (e.g., `gpt-5.4`, `gemini-3.1-flash-lite-preview`) |
 | `LLM_API_KEY` | API key for the LLM provider |
 | `API_KEY` | API key for the Copilotz web UI |
 
