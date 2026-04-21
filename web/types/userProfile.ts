@@ -1,3 +1,8 @@
+/**
+ * Profile shape stored on `collections.participant` under `metadata` for the starter UI.
+ * Not a separate collection — use the bundled `participant` collection only.
+ */
+
 export type MemoryItem = {
   id: string;
   content: string;
@@ -8,6 +13,7 @@ export type MemoryItem = {
 };
 
 export type UserProfile = {
+  id?: string;
   basics?: {
     fullName?: string;
     role?: string;
@@ -37,5 +43,6 @@ export type UserProfile = {
   memories?: {
     items?: MemoryItem[];
   };
+  createdAt?: string;
   updatedAt?: string;
 };

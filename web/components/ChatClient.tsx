@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Badge } from "./ui/badge.tsx";
-import { Bot, Brain, PanelRightOpen, Sparkles } from "lucide-react";
+import { Bot, Brain, LayoutDashboard, PanelRightOpen, Sparkles } from "lucide-react";
 import { CopilotzChat } from "@copilotz/chat-adapter";
 import type {
   ChatConfig,
@@ -8,34 +8,14 @@ import type {
   UserCustomField,
 } from "@copilotz/chat-ui";
 import { type AgentOption, fetchAgents } from "../services/agentsService.ts";
-import type { UserProfile } from "../../resources/schemas/userProfile.schema.ts";
+import type { UserProfile } from "../types/userProfile.ts";
 import { ProfileSidebar } from "./ProfileSidebar.tsx";
 
 export interface ChatClientProps {
   userId: string;
   onLogout?: () => void;
+  onOpenAdmin?: () => void;
 }
-
-const config: ChatConfig = {
-  branding: {
-    logo: <Bot className="h-6 w-6" />,
-    avatar: <Sparkles className="h-6 w-6" />,
-    title: "Copilotz Starter",
-    subtitle: "Domain APIs, profile sidebar, and graph-ready backend",
-  },
-  customComponent: {
-    label: "Profile",
-    icon: <PanelRightOpen className="h-5 w-5" />,
-  },
-  labels: {
-    defaultThreadName: "Starter Thread",
-  },
-  agentSelector: {
-    enabled: true,
-    hideIfSingle: true,
-    mode: "multi",
-  },
-};
 
 const suggestions = [
   "Summarize what you already know about me.",
@@ -70,7 +50,11 @@ function isProfileMutationOutput(output: Record<string, unknown>): boolean {
   );
 }
 
-export const ChatClient: React.FC<ChatClientProps> = ({ userId, onLogout }) => {
+export const ChatClient: React.FC<ChatClientProps> = ({
+  userId,
+  onLogout,
+  onOpenAdmin,
+}) => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [agents, setAgents] = useState<AgentOption[]>([]);
   const [selectedAgentId, setSelectedAgentId] = useState<string | null>(null);
@@ -88,7 +72,6 @@ export const ChatClient: React.FC<ChatClientProps> = ({ userId, onLogout }) => {
 
         setAgents(nextAgents);
         setSelectedAgentId((current) => current ?? nextAgents[0]?.id ?? null);
-        // Initialize all agents as participants in multi-agent mode
         setParticipantIds((current) =>
           current.length > 0 ? current : nextAgents.map((a) => a.id),
         );
@@ -141,23 +124,57 @@ export const ChatClient: React.FC<ChatClientProps> = ({ userId, onLogout }) => {
     [handleProfileChange, profileRefreshToken, userId],
   );
 
+  const config = useMemo(
+    (): ChatConfig => ({
+      branding: {
+        logo: <Bot className="h-6 w-6" />,
+        avatar: <Sparkles className="h-6 w-6" />,
+        title: "Copilotz Starter",
+        subtitle: "Domain APIs, profile sidebar, and graph-ready backend",
+      },
+      customComponent: {
+        label: "Profile",
+        icon: <PanelRightOpen className="h-5 w-5" />,
+      },
+      labels: {
+        defaultThreadName: "Starter Thread",
+      },
+      agentSelector: {
+        enabled: true,
+        hideIfSingle: true,
+        mode: "multi",
+      },
+      headerActions: onOpenAdmin ? (
+        <button
+          type="button"
+          onClick={onOpenAdmin}
+          className="inline-flex items-center justify-center h-8 w-8 rounded-md text-sm font-medium transition-all hover:bg-accent hover:text-accent-foreground"
+          title="Admin Dashboard"
+        >
+          <LayoutDashboard className="h-4 w-4" />
+        </button>
+      ) : null,
+    }),
+    [onOpenAdmin],
+  );
+
   return (
-      <CopilotzChat
-        userId={userId}
-        userName={profile?.basics?.fullName || userId}
-        initialContext={initialContext}
-        onToolOutput={handleToolOutput}
-        onLogout={onLogout}
-        config={config}
-        customComponent={renderProfileSidebar}
-        suggestions={suggestions}
-        agentOptions={agents}
-        selectedAgentId={selectedAgentId}
-        onSelectAgent={setSelectedAgentId}
-        participantIds={participantIds}
-        onParticipantsChange={setParticipantIds}
-        targetAgentId={targetAgentId}
-        onTargetAgentChange={setTargetAgentId}
-      />
+    <CopilotzChat
+      userId={userId}
+      userName={profile?.basics?.fullName || userId}
+      initialContext={initialContext}
+      onToolOutput={handleToolOutput}
+      onLogout={onLogout}
+      config={config}
+      customComponent={renderProfileSidebar}
+      suggestions={suggestions}
+      agentOptions={agents}
+      selectedAgentId={selectedAgentId}
+      onSelectAgent={setSelectedAgentId}
+      participantIds={participantIds}
+      onParticipantsChange={setParticipantIds}
+      targetAgentId={targetAgentId}
+      onTargetAgentChange={setTargetAgentId}
+    />
   );
 };

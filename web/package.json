@@ -7,12 +7,13 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "link:libs": "npm link @copilotz/chat-ui @copilotz/chat-adapter",
-    "unlink:libs": "npm unlink @copilotz/chat-ui @copilotz/chat-adapter && npm install"
+    "link:libs": "npm link \"../../../lib/packages/copilotz-chat-ui\" \"../../../lib/packages/copilotz-chat-adapter\" \"../../../lib/packages/copilotz-admin\"",
+    "unlink:libs": "npm unlink @copilotz/chat-ui @copilotz/chat-adapter @copilotz/admin && npm install"
   },
   "dependencies": {
-    "@copilotz/chat-adapter": "^0.3.3",
-    "@copilotz/chat-ui": "^0.3.3",
+    "@copilotz/admin": "^0.6.5",
+    "@copilotz/chat-adapter": "^0.6.5",
+    "@copilotz/chat-ui": "^0.6.5",
     "@radix-ui/react-scroll-area": "^1.2.10",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",

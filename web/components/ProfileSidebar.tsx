@@ -12,7 +12,7 @@ import {
 import type {
   MemoryItem,
   UserProfile,
-} from "../../resources/schemas/userProfile.schema.ts";
+} from "../types/userProfile.ts";
 import {
   addParticipantMemory,
   deleteParticipantMemory,

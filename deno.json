@@ -1,10 +1,10 @@
 {
-  "name": "@my-scope/my-project",
-  "description": "My Copilotz Project",
-  "version": "0.1.0",
-  "license": "MIT",
-  "exports": {
-    ".": "./api/index.ts"
+  "tasks": {
+    "start": "deno run -A -r --env --config=deno.json oxian-js --deno-config=./deno.json",
+    "dev": "ENV=dev deno run -A -r --env --config=deno.json oxian-js dev --deno-config=./deno.json",
+    "run:agent": "ENV=dev deno run --env -A index.ts",
+    "dev:web": "cd web && npm run dev",
+    "build:web": "cd web && npm run build"
   },
   "unstable": [
     "bare-node-builtins",
@@ -12,18 +12,11 @@
     "node-globals",
     "raw-imports"
   ],
-  "tasks": {
-    "start": "deno run -A -r --env --config=deno.json oxian-js",
-    "dev": "ENV=dev deno run -A -r --env --config=deno.json oxian-js dev",
-    "run:agent": "ENV=dev deno run --env -A api/runAgent.ts",
-    "dev:web": "cd web && npm run dev",
-    "build:web": "cd web && npm run build"
-  },
   "imports": {
-    "copilotz": "jsr:@copilotz/copilotz@0.26.3",
-    "copilotz/server": "jsr:@copilotz/copilotz@0.26.3/server",
-    "copilotz/server/channels/web": "jsr:@copilotz/copilotz@0.26.3/server/channels/web",
-    "oxian-js": "jsr:@oxian/oxian-js@^0.12.24",
-    "@/": "./"
+    "@/": "./",
+    "copilotz": "jsr:@copilotz/copilotz@0.34.1",
+    "copilotz/server": "jsr:@copilotz/copilotz@0.34.1/server/",
+    "oxian-js": "jsr:@oxian/oxian-js@^0.13.0",
+    "oxian-js/types": "jsr:@oxian/oxian-js@^0.13.0/types"
   }
 }

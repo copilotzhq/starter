@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { AdminClient } from "./components/AdminClient.tsx";
 import { ChatClient } from "./components/ChatClient.tsx";
 import { LoginPage } from "./components/LoginPage.tsx";
 
 const USER_ID_STORAGE_KEY = "copilotz-starter.userId";
 
-type View = "login" | "chat";
+type View = "login" | "chat" | "admin";
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>("login");
@@ -60,7 +61,15 @@ const App: React.FC = () => {
     );
   }
 
-  return <ChatClient userId={currentUserId} onLogout={handleLogout} />;
+  return view === "chat" ? (
+    <ChatClient
+      userId={currentUserId}
+      onLogout={handleLogout}
+      onOpenAdmin={() => setView("admin")}
+    />
+  ) : (
+    <AdminClient onBackToChat={() => setView("chat")} />
+  );
 };
 
 export default App;

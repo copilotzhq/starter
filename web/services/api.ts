@@ -31,6 +31,24 @@ export const API_BASE =
 
 export const apiUrl = (path: string) => `${API_BASE}${path}`;
 
+/**
+ * Parse `apiUrl(path)` into a `URL` for `searchParams` etc.
+ * When `API_BASE` is origin-relative (`/api`), a single-arg `new URL()` throws;
+ * this supplies the current origin as the base in that case.
+ */
+export function apiUrlObject(path: string): URL {
+  const resolved = apiUrl(path);
+  if (/^https?:\/\//i.test(resolved)) {
+    return new URL(resolved);
+  }
+  const origin =
+    typeof globalThis.location !== "undefined" &&
+    typeof globalThis.location.origin === "string"
+      ? globalThis.location.origin
+      : "http://localhost";
+  return new URL(resolved, origin);
+}
+
 export const withAuthHeaders = (
   headers: Record<string, string> = {},
 ): Record<string, string> => {
