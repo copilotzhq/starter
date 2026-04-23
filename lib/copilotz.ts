@@ -1,27 +1,35 @@
 import { createCopilotz } from "copilotz";
 
-type LLMProviderName = "openai" | "anthropic" | "gemini" | "groq" | "deepseek" | "minimax" | "ollama" | "xai";
+type LLMProviderName =
+  | "openai"
+  | "anthropic"
+  | "gemini"
+  | "groq"
+  | "deepseek"
+  | "minimax"
+  | "ollama"
+  | "xai";
 type LLMReasoningEffort = "minimal" | "low" | "medium" | "high";
 
 const getCopilotzInstance = async () => {
-
   const databaseUrl = Deno.env.get("DATABASE_URL") || undefined;
 
   const copilotz = await createCopilotz({
     dbConfig: { url: databaseUrl },
     resources: {
-      path: [
-        "./resources",
-      ]
+      path: ["./resources"],
+      imports: ["agents.copilotz"],
     },
     namespace: "copilotz-starter",
     agent: {
       llmOptions: {
         provider: Deno.env.get("LLM_PROVIDER") as LLMProviderName,
         model: Deno.env.get("LLM_MODEL"),
-        reasoningEffort: Deno.env.get("LLM_REASONING_EFFORT") as LLMReasoningEffort,
-        apiKey: Deno.env.get("LLM_API_KEY"),
+        reasoningEffort: Deno.env.get(
+          "LLM_REASONING_EFFORT",
+        ) as LLMReasoningEffort,
         maxTokens: Number(Deno.env.get("LLM_MAX_TOKENS")) || 100000,
+        limitEstimatedInputTokens: 8000,
       },
     },
     assets: {
@@ -34,10 +42,10 @@ const getCopilotzInstance = async () => {
         resolveInLLM: true,
       },
     },
-    multiAgent: { 
-      enabled: true ,
+    multiAgent: {
+      enabled: true,
       maxAgentTurns: 20,
-    }
+    },
   });
   return copilotz;
 };
